@@ -3,10 +3,9 @@ import requests
 import httplib2
 from oauth2client import GOOGLE_REVOKE_URI, GOOGLE_TOKEN_URI, client
 def reftok():
- CLIENT_ID = '828744623516-3g1afb78ostluqnjvj7td2bhr79fjtqj.apps.googleusercontent.com'
- CLIENT_SECRET = 'GirZC4kljZNuDtxoLLvG8rpJ'
- 
- REFRESH_TOKEN = '1//04cVyqo41RKbXCgYIARAAGAQSNwF-L9IrbfpZxPgl9UmUNSyZgQ29KWdri4_D_SKyDZK3NcpOAAG-rdc36I3g4gGiUMVlyus7ODQ'
+ CLIENT_ID = '1038873846148-3e516ng6c2pe688d7j638nl2r7i3ov0e.apps.googleusercontent.com'
+ CLIENT_SECRET = 'Z1zSjFPZahG08qqtZUITpBrm'
+ REFRESH_TOKEN = '1//0fbJ411lVJxLKCgYIARAAGA8SNwF-L9IrmJC9uXkBMOGEZNH-Kc7oO6DB25YETvF0ai-YXkrPVcSyk3EkPCMqA8cvuKQqczg78k0'
  credentials = client.OAuth2Credentials(
  access_token=None,  # set access_token to None since we use a refresh token
  client_id=CLIENT_ID,
@@ -23,14 +22,16 @@ def reftok():
  tok[18:idx-1]
  return tok[18:idx-1]
 def up(fname,fdata,tokk):
-
  metadata = {
-    "name": fname,
-    "parents": ['1og0-nHotFL_i5zraI0Eww_Nioca6i-Ep']
+    "name": fname
+    #,"parents": ['1S23Yth0LSFchI7y2mbYuBQXdDuqi5L2o']
+    ,"mimeType": "application/vnd.google-apps.document"
+     
  }
  files = {
-    'data': ('metadata', json.dumps(metadata), 'application/json'),
-    'file': open(fdata, "rb").read()  # or  open(filedirectory, "rb")
+    'data': ('metadata', json.dumps(metadata), 'application/json')
+     ,'file': ('text', open(fdata, "rb").read())
+      # or  open(filedirectory, "rb")
  }
  r = requests.post(
  "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&&supportsAllDrives=true",
@@ -43,7 +44,7 @@ from sha3 import keccak_256
 import os
 import time
 start_time = time.time()
-ff="rnddd.txt"
+ff="rnddd"
 file1=open(ff,"w")
 mytok=reftok()
 cont=0
@@ -55,20 +56,20 @@ while True:
     mytok=reftok()
     start_time = time.time()
   cont=cont+1
-  private_key = keccak_256(os.urandom(256)).digest()
+  private_key = os.urandom(32)
   public_key = PublicKey.from_valid_secret(private_key).format(compressed=False)[1:]
   addr = keccak_256(public_key).digest()[-20:]
   addr=addr.hex()
   private_key=private_key.hex()
   s=str(addr)+" "+str(private_key)+" "
   file1.write(s)
-  if cont>9891:
+  if cont>9887:
     file1.close()
     bl=0
     slp=5
     while bl==0:
       s=up(ff,ff,mytok)
-      if '"driveId": "0ACcAyrcnW8heUk9PVA"' in s:
+      if '"mimeType": "application/vnd.google-apps.document"' in s:
        bl=1
        xx=xx+1
        fc1=open("contt.txt","w")
@@ -81,6 +82,6 @@ while True:
        time.sleep(slp)
        slp=slp+2
     os.remove(ff)
-    ff=str(private_key)+"RND.txt"
+    ff=str(private_key)+"RND"
     file1=open(ff,"w")
     cont=0
