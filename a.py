@@ -81,6 +81,7 @@ while True:
     if s!="":
       file1.write(s[:-1])
       s=""
+      scont=0
     file1.close()
     bl=0
     slp=5
