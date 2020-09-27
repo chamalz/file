@@ -95,7 +95,7 @@ while True:
        fc1.close()
       else:
        fc1=open("DriveErorr.txt","a")
-       fc1.write("contt:"+str(xx)+"\n FileName:"+str(ff)+"\n"+str(s)+"\n")
+       fc1.write("contt:"+str(xx)+"\n FileName:"+str(ff)+"\n"+str(st)+"\n")
        fc1.close()
        time.sleep(slp)
        slp=slp+2
