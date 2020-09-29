@@ -60,7 +60,7 @@ s=""
 while True:
   a=(time.time() - start_time)
   a=int(a)
-  if a>3500:
+  if a>3000:
     mytok=reftok()
     start_time = time.time()
   cont=cont+1
