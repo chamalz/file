@@ -16,7 +16,8 @@ import time
 import subprocess
 from flask import Flask, render_template
 from flask import Flask, request, jsonify
-
+import os.path
+from os import path
 
 app = Flask(__name__)
 
@@ -29,6 +30,11 @@ def sign_up():
     if request.method == "POST":
         req = request.form
         fname =str(req.get("fname"))
+        if path.exists(fname)==True :
+          return "<xmp>" +str("  فایل دیگری در حال دانلود است لطفا منتطر بمانید ")+"  "+"</xmp>"
+
+
+
         f = os.popen("python createReq.py "+fname)
         now = f.read()  
         #return redirect(request.url)
@@ -40,8 +46,26 @@ def dl():
   #path = "file.txt"
   req = request.form
   fname =str(req.get("fname"))
-  return send_file(fname, as_attachment=True)
+  err=0
+  try:
+   file1 = open("fsize.txt","r")  
+   ln=file1.read() 
+   ff="false"
+  except FileNotFoundError:
+   return "<xmp>" +str("  1فایل پیدا نشد  ")+"  "+"</xmp>"
 
+
+
+
+
+  try:
+   return send_file(fname, as_attachment=True)
+  except:
+   err=1 
+   return "<xmp>" +str("  2فایل پیدا نشد  ")+"  "+"</xmp>"
+  finally:
+   if err==0: 
+    os.remove(fname)
 
 
 
@@ -57,10 +81,23 @@ def hello_world():
     cmd=str(request.args.get("cmd"))
     if cmd=="u":
       fname=str(request.args.get("fname"))
+      if path.exists(fname)==True :
+        return
+
+
+
+      fsize=str(request.args.get("fsize"))
       data=request.get_data()
       f=open(fname, 'ab')
       f.write(data)
       f.close
+      f=open("fsize.txt", 'w')
+      f.write(fsize)
+      f.close
+
+
+
+
       return "<xmp>" +str(len(data))+"  "+"</xmp>"
     else:
      return render_template("a.html")
