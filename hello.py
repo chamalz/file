@@ -15,7 +15,7 @@ import threading
 import time
 import subprocess
 from flask import Flask, render_template
-
+from flask import Flask, request, jsonify
 
 
 app = Flask(__name__)
@@ -52,11 +52,14 @@ def dl():
 
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def hello_world():
-    #aa=request.args.get("n")
-    #c=int(aa)
-    return render_template("a.html")
+    cmd=str(request.args.get("n"))
+    if cmd=="u":
+      data=request.get_data()
+      return "<xmp>" +str(len(data))+"  "+str(data[:40])+"</xmp>"
+    else:
+     return render_template("a.html")
 
 if __name__ == '__main__':
     # Run the app, listening on all IPs with our chosen port number
