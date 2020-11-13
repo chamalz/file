@@ -30,7 +30,7 @@ def sign_up():
     if request.method == "POST":
         req = request.form
         fname =str(req.get("fname"))
-        if path.exists(fname)==True :
+        if path.exists('file.txt')==True :
           return "<xmp>" +str("  فایل دیگری در حال دانلود است لطفا منتطر بمانید ")+"  "+"</xmp>"
 
 
@@ -47,12 +47,19 @@ def dl():
   req = request.form
   fname =str(req.get("fname"))
   err=0
+  ln=0
   try:
    file1 = open("fsize.txt","r")  
    ln=file1.read() 
-   ff="false"
+   file1.close()
   except FileNotFoundError:
    return "<xmp>" +str("  1فایل پیدا نشد  ")+"  "+"</xmp>"
+  ln=int(ln)
+  length = os.path.getsize(fname)
+  length=int(length)
+  if ln<length:
+    return "<xmp>" +str(" فایل در حال آپلود میباشد لطفا منتظر بمانید")+"  "+"</xmp>"
+
 
 
 
@@ -83,8 +90,6 @@ def hello_world():
       fname=str(request.args.get("fname"))
       if path.exists(fname)==True :
         return
-
-
 
       fsize=str(request.args.get("fsize"))
       data=request.get_data()
