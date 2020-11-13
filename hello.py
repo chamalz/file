@@ -52,18 +52,13 @@ def dl():
    file1 = open("fsize.txt","r")  
    ln=file1.read() 
    file1.close()
+   ln=int(ln)
+   length = os.path.getsize(fname)
+   length=int(length)
+   if ln<length:
+    return "<xmp>" +str(" فایل در حال آپلود میباشد لطفا منتظر بمانید")+"  "+"</xmp>"
   except FileNotFoundError:
    return "<xmp>" +str("  1فایل پیدا نشد  ")+"  "+"</xmp>"
-  ln=int(ln)
-  length = os.path.getsize(fname)
-  length=int(length)
-  if ln<length:
-    return "<xmp>" +str(" فایل در حال آپلود میباشد لطفا منتظر بمانید")+"  "+"</xmp>"
-
-
-
-
-
 
   try:
    return send_file(fname, as_attachment=True)
