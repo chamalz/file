@@ -18,7 +18,6 @@ from flask import Flask, render_template
 
 
 
-
 app = Flask(__name__)
 
 # Get port from environment variable or choose 9099 as local default
@@ -29,17 +28,19 @@ def sign_up():
 
     if request.method == "POST":
         req = request.form
-        fname = req.get("fname")
-        f = os.popen("python createReq.py "+str(fname))
+        fname =str(req.get("fname"))
+        f = os.popen("python createReq.py "+fname)
         now = f.read()  
         #return redirect(request.url)
-    return render_template("b.html")
+    return render_template("b.html",fname=fname)
 
 
 @app.route("/dl", methods=["GET", "POST"])
 def dl():
-  path = "file.txt"
-  return send_file(path, as_attachment=True)
+  #path = "file.txt"
+  req = request.form
+  fname =str(req.get("fname"))
+  return send_file(fname, as_attachment=True)
 
 
 
