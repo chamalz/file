@@ -61,10 +61,6 @@ def dl():
     return "<xmp>" +str(" فایل در حال آپلود میباشد لطفا منتظر بمانید")+"  "+"</xmp>"
 
 
-
-
-
-
   try:
    return send_file(fname, as_attachment=True)
   except:
@@ -73,12 +69,6 @@ def dl():
   finally:
    if err==0: 
     os.remove(fname)
-
-
-
-
-
-
 
 
 
