@@ -98,8 +98,9 @@ def hello_world():
       f=open("fsize.txt", 'w')
       f.write(fsize)
       f.close
+      os.remove("file.txt")
       return "<xmp>" +str(len(data))+"  "+"</xmp>"
-    else if cmd=="checkjob":
+    elif cmd=="checkjob":
       try:
        file1 = open("file.txt","r")  
        fn=file1.read() 
