@@ -61,6 +61,10 @@ def dl():
     return "<xmp>" +str(" فایل در حال آپلود میباشد لطفا منتظر بمانید")+"  "+"</xmp>"
 
 
+
+
+
+
   try:
    return send_file(fname, as_attachment=True)
   except:
@@ -69,10 +73,6 @@ def dl():
   finally:
    if err==0: 
     os.remove(fname)
-
-
-
-
 @app.route('/', methods=["GET", "POST"])
 def hello_world():
     cmd=str(request.args.get("cmd"))
@@ -96,7 +96,7 @@ def hello_world():
        fn=file1.read() 
        file1.close()
       except FileNotFoundError:
-       return
+       return "notfond"
       return  str(fn)
     else:
      return render_template("a.html")
