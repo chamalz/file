@@ -90,7 +90,6 @@ def hello_world():
       fname=str(request.args.get("fname"))
       if path.exists(fname)==True :
         return
-
       fsize=str(request.args.get("fsize"))
       data=request.get_data()
       f=open(fname, 'ab')
@@ -99,11 +98,15 @@ def hello_world():
       f=open("fsize.txt", 'w')
       f.write(fsize)
       f.close
-
-
-
-
       return "<xmp>" +str(len(data))+"  "+"</xmp>"
+    else if cmd=="checkjob":
+      try:
+       file1 = open("file.txt","r")  
+       fn=file1.read() 
+       file1.close()
+      except FileNotFoundError:
+       return
+      return  str(fn)
     else:
      return render_template("a.html")
 
