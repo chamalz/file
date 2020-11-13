@@ -5,16 +5,16 @@ Author: Ian Huston
 License: See LICENSE.txt
 
 """
-from flask import Flask
+from flask import Flask, request, render_template
 import os
-
-
+from flask import send_file
+from flask import request, redirect
 from flask import request
 import multiprocessing
 import threading
 import time
 import subprocess
-
+from flask import Flask, render_template
 
 
 
@@ -24,29 +24,38 @@ app = Flask(__name__)
 # Get port from environment variable or choose 9099 as local default
 port = int(os.getenv("PORT", 9099))
 
+@app.route("/sign-up", methods=["GET", "POST"])
+def sign_up():
+
+    if request.method == "POST":
+        req = request.form
+        fname = req.get("fname")
+        f = os.popen("python createReq.py "+str(fname))
+        now = f.read()  
+        #return redirect(request.url)
+    return render_template("b.html")
+
+
+@app.route("/dl", methods=["GET", "POST"])
+def dl():
+  path = "file.txt"
+  return send_file(path, as_attachment=True)
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/')
 def hello_world():
-    aa=request.args.get("n")
+    #aa=request.args.get("n")
     #c=int(aa)
-    
-    ff="false"
-    try:
-        f1 = open('myfile.txt')
-        f1.close()
-        ff="true"
-    except FileNotFoundError:
-        ff="false"
-    if ff=="false":
-        f1=open("myfile.txt","a")
-        f1.close()
-        f = subprocess.Popen(["python", "a.py"])
-    
-
-    f = os.popen(str(aa))
-    now = f.read()  
-    
-       
-    return "<xmp>" + 'instance  ' + str(os.getenv("CF_INSTANCE_INDEX", 0))+ "\n" +now+"</xmp>"
+    return render_template("a.html")
 
 if __name__ == '__main__':
     # Run the app, listening on all IPs with our chosen port number
