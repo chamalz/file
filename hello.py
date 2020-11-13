@@ -58,6 +58,7 @@ def dl():
    if ln<length:
     return "<xmp>" +str(" فایل در حال آپلود میباشد لطفا منتظر بمانید")+"  "+"</xmp>"
   except FileNotFoundError:
+   os.remove("file.txt")
    return "<xmp>" +str("  1فایل پیدا نشد  ")+"  "+"</xmp>"
 
   try:
@@ -74,7 +75,7 @@ def hello_world():
     if cmd=="u":
       fname=str(request.args.get("fname"))
       if path.exists(fname)==True :
-        return
+        return "فایل تکراری"
       fsize=str(request.args.get("fsize"))
       data=request.get_data()
       f=open(fname, 'ab')
