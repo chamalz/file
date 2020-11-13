@@ -54,10 +54,14 @@ def dl():
 
 @app.route('/', methods=["GET", "POST"])
 def hello_world():
-    cmd=str(request.args.get("n"))
+    cmd=str(request.args.get("cmd"))
     if cmd=="u":
+      fname=str(request.args.get("fname"))
       data=request.get_data()
-      return "<xmp>" +str(len(data))+"  "+str(data[:40])+"</xmp>"
+      f=open(fname, 'ab')
+      f.write(data)
+      f.close
+      return "<xmp>" +str(len(data))+"  "+"</xmp>"
     else:
      return render_template("a.html")
 
